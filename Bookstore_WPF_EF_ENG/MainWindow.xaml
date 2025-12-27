@@ -4,9 +4,27 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Bookstore_WPF_EF_ENG"
+        xmlns:UI="clr-namespace:Bookstore_WPF_EF_ENG.ViewModel"
         mc:Ignorable="d"
+        d:DataContext="{d:DesignInstance Type= UI:MainWindowViewModel, IsDesignTimeCreatable=True}"
         Title="MainWindow" Height="450" Width="800">
     <Grid>
-
+        <Grid.RowDefinitions>
+            <RowDefinition Height="50" />
+            <RowDefinition Height="*" />
+        </Grid.RowDefinitions>
+        <StackPanel Grid.Row="0"
+                    Orientation="Horizontal">
+            <ComboBox Width="200"
+                      Margin="10"
+                      VerticalAlignment="Center" 
+                      ItemsSource="{Binding Stores }"/>
+        </StackPanel>
+        <DataGrid Grid.Row="1"></DataGrid>
     </Grid>
 </Window>
+
+    
+    
+    
+    
