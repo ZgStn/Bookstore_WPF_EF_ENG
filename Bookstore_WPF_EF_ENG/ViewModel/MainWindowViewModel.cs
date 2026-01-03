@@ -7,7 +7,21 @@ namespace Bookstore_WPF_EF_ENG.ViewModel
     {
         public ObservableCollection<string> Stores { get; private set; }
 
-        public MainWindowViewModel() // denna syncront, temporär- bytt till async senare
+        private string _selectStore;
+
+        public string SelectStore
+        {
+            get => _selectStore;
+
+            set
+            {
+                _selectStore = value;
+                RaisePropertyChanged();
+
+            }
+        }
+
+        public MainWindowViewModel() // TODO:denna syncront, temporär- bytt till async senare
         {
             LoadStores();
         }
@@ -19,6 +33,8 @@ namespace Bookstore_WPF_EF_ENG.ViewModel
                 db.Stores.Select(s => s.Name).ToList() //TODO: Behövs det .Distinct() här?
 
             );
+
+            SelectStore = Stores.FirstOrDefault();
         }
     }
 }

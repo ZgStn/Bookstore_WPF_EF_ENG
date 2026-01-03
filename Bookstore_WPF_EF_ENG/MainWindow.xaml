@@ -18,7 +18,11 @@
             <ComboBox Width="200"
                       Margin="10"
                       VerticalAlignment="Center" 
-                      ItemsSource="{Binding Stores }"/>
+                      ItemsSource="{Binding Stores }"
+                      SelectedItem="{Binding SelectStore}"
+                      
+                      />
+                      
         </StackPanel>
         <DataGrid Grid.Row="1"></DataGrid>
     </Grid>
