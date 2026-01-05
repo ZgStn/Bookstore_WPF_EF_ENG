@@ -44,17 +44,17 @@ namespace Bookstore_WPF_EF_ENG.ViewModel
                 //LoadInventories();
 
                 RaisePropertyChanged();
-                ShowBookDetailsCommand.RaiseCanExecuteChanged();
-                //RaisePropertyChanged("Books");
+                // ShowBookDetailsCommand.RaiseCanExecuteChanged();
+                RaisePropertyChanged("Books");
 
             }
         }
 
         public ObservableCollection<Inventory> Inventories { get; private set; }
 
-        private string? _selectedInventory;
+        private Inventory? _selectedInventory;
 
-        public string? SelectedInventory
+        public Inventory? SelectedInventory
         {
             get => _selectedInventory;
 
@@ -62,7 +62,7 @@ namespace Bookstore_WPF_EF_ENG.ViewModel
             {
                 _selectedInventory = value;
                 RaisePropertyChanged();
-
+                ShowBookDetailsCommand.RaiseCanExecuteChanged();
 
             }
         }
@@ -70,6 +70,7 @@ namespace Bookstore_WPF_EF_ENG.ViewModel
         public Action<object> ShowBookDetails { get; set; }
         public DelegateCommand ShowBookDetailsCommand { get; private set; }
 
+        public Action<string> ShowMessage { get; set; }
         public MainWindowViewModel() // TODO:denna syncront, temporär- bytt till async senare
         {
             ShowBookDetailsCommand = new DelegateCommand(DoShowBookDetails, CanShowBookDetails);
@@ -77,10 +78,10 @@ namespace Bookstore_WPF_EF_ENG.ViewModel
 
         }
 
-        private void DoShowBookDetails(object obj) => ShowBookDetails(obj);
+        private void DoShowBookDetails(object obj) => ShowMessage?.Invoke("Button clicked!");//ShowBookDetails(obj);
 
 
-        private bool CanShowBookDetails(object? arg) => SelectedBook is not null;
+        private bool CanShowBookDetails(object? arg) => SelectedInventory is not null;
 
         private void LoadStores()
         {

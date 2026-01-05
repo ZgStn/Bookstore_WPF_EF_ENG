@@ -11,9 +11,11 @@ namespace Bookstore_WPF_EF_ENG
         public MainWindow()
         {
             InitializeComponent();
-            DataContext = new MainWindowViewModel() { ShowBookDetails = OpenBookDetailsWindow };
-
-
+            DataContext = new MainWindowViewModel()
+            {
+                ShowBookDetails = OpenBookDetailsWindow,
+                ShowMessage = message => MessageBox.Show(message)
+            };
         }
 
         private void OpenBookDetailsWindow(object obj)

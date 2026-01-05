@@ -29,6 +29,7 @@
                       ItemsSource="{Binding Stores }"
                       SelectedItem="{Binding SelectedStore}" />
             <Button Content="Show Details" 
+                    VerticalAlignment="Center"
                     Command="{Binding ShowBookDetailsCommand}"/>
         </StackPanel>
         <DataGrid Grid.Row="1"
