@@ -27,10 +27,9 @@
                       Margin="10"
                       VerticalAlignment="Center" 
                       ItemsSource="{Binding Stores }"
-                      SelectedItem="{Binding SelectedStore}"
-                      
-                      />
-                      
+                      SelectedItem="{Binding SelectedStore}" />
+            <Button Content="Show Details" 
+                    Command="{Binding ShowBookDetailsCommand}"/>
         </StackPanel>
         <DataGrid Grid.Row="1"
                   AutoGenerateColumns="False"

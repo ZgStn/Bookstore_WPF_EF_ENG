@@ -1,6 +1,7 @@
 ﻿using System.Collections.ObjectModel;
 using Bookstore.Domain;
 using Bookstore.Infrastructure.Data.Model;
+using Bookstore_WPF_EF_ENG.Command;
 using Microsoft.EntityFrameworkCore;
 
 namespace Bookstore_WPF_EF_ENG.ViewModel
@@ -23,6 +24,29 @@ namespace Bookstore_WPF_EF_ENG.ViewModel
 
                 RaisePropertyChanged();// TODO: varför har vi denna, (två st)
                 RaisePropertyChanged("Inventories");
+
+            }
+        }
+
+
+        public ObservableCollection<Book> Books { get; private set; }
+
+        private string? _selectedBook;
+
+        public string? SelectedBook
+        {
+            get => _selectedBook;
+
+            set
+            {
+                _selectedBook = value;
+
+                //LoadInventories();
+
+                RaisePropertyChanged();
+                ShowBookDetailsCommand.RaiseCanExecuteChanged();
+                //RaisePropertyChanged("Books");
+
             }
         }
 
@@ -39,14 +63,25 @@ namespace Bookstore_WPF_EF_ENG.ViewModel
                 _selectedInventory = value;
                 RaisePropertyChanged();
 
+
             }
         }
 
+        public Action<object> ShowBookDetails { get; set; }
+        public DelegateCommand ShowBookDetailsCommand { get; private set; }
+
         public MainWindowViewModel() // TODO:denna syncront, temporär- bytt till async senare
         {
+            ShowBookDetailsCommand = new DelegateCommand(DoShowBookDetails, CanShowBookDetails);
             LoadStores();
 
         }
+
+        private void DoShowBookDetails(object obj) => ShowBookDetails(obj);
+
+
+        private bool CanShowBookDetails(object? arg) => SelectedBook is not null;
+
         private void LoadStores()
         {
             using var db = new BookstoreContext();
