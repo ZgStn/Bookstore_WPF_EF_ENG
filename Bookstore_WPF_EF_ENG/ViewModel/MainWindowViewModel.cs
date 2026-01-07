@@ -71,7 +71,7 @@ namespace Bookstore_WPF_EF_ENG.ViewModel
         public DelegateCommand ShowBookDetailsCommand { get; private set; }
 
         public Action<string> ShowMessage { get; set; }
-        public MainWindowViewModel() // TODO:denna syncront, temporär- bytt till async senare
+        public MainWindowViewModel() // TODO: denna syncront, temporär- bytt till async senare
         {
             ShowBookDetailsCommand = new DelegateCommand(DoShowBookDetails, CanShowBookDetails);
             LoadStores();
@@ -85,7 +85,7 @@ namespace Bookstore_WPF_EF_ENG.ViewModel
 
         private bool CanShowBookDetails(object? arg) => SelectedInventory is not null;
 
-        private void LoadStores()
+        private void LoadStores() // TODO: make async 
         {
             using var db = new BookstoreContext();
 
@@ -97,7 +97,7 @@ namespace Bookstore_WPF_EF_ENG.ViewModel
             SelectedStore = Stores.FirstOrDefault();
         }
 
-        private void LoadInventories()
+        private void LoadInventories() // TODO: make async
         {
             using var db = new BookstoreContext();
 

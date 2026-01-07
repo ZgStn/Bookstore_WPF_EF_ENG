@@ -10,6 +10,7 @@
         Title="Quantity" Height="450" Width="800">
     <Grid>
         <DataGrid 
+            
             AutoGenerateColumns="False"
             ItemsSource="{Binding Details}">
 
