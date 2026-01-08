@@ -28,6 +28,10 @@ namespace Bookstore_WPF_EF_ENG.ViewModel
             }
         }
 
+        public Book? AddedBook { get; set; }
+        public int NewQuantity { get; set; }
+
+        public DelegateCommand AddBookCommand { get; }
 
         public ObservableCollection<Book> Books { get; set; }
 
@@ -74,9 +78,34 @@ namespace Bookstore_WPF_EF_ENG.ViewModel
         public MainWindowViewModel() //TODO:denna syncront, temporär- bytt till async senare
         {
             ShowBookDetailsCommand = new DelegateCommand(DoShowBookDetails, CanShowBookDetails);
+            AddBookCommand = new DelegateCommand(AddBook, CanAddBook);
             _ = InitializeAsync();
         }
-        
+
+        private bool CanAddBook(object? arg)
+        {
+            return SelectedStore != null
+                   && AddedBook != null;
+        }
+
+        private void AddBook(object? obj)
+        {
+            var newInventory = new Inventory()
+            {
+               Isbn13Navigation = AddedBook,
+               Quantity = NewQuantity
+            };
+
+            Inventories.Add(newInventory);
+
+            AddedBook = null;
+            NewQuantity = 0;
+
+            RaisePropertyChanged(nameof(AddedBook));
+            RaisePropertyChanged(nameof(NewQuantity));
+
+        }
+
         private async Task InitializeAsync()
         {
             await LoadStoresAsync();
@@ -100,7 +129,6 @@ namespace Bookstore_WPF_EF_ENG.ViewModel
 
             );
             RaisePropertyChanged(nameof(Stores));
-            SelectedStore = Stores.FirstOrDefault();
         }
 
         private async Task LoadInventoriesAsync() // TODO: make async

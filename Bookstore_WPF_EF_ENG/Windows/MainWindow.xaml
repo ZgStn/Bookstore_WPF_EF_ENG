@@ -18,8 +18,9 @@
     
         <Grid>
         <Grid.RowDefinitions>
-            <RowDefinition Height="50" />
+            <RowDefinition Height="Auto" />
             <RowDefinition Height="*" />
+            <RowDefinition Height="Auto" />
         </Grid.RowDefinitions>
         <StackPanel Grid.Row="0"
                     Orientation="Horizontal">
@@ -52,25 +53,10 @@
                   SelectedItem="{Binding SelectedInventory}">
             <DataGrid.Columns>
                 <DataGridTextColumn Header="ISBN"
-                                    Binding="{Binding Isbn13}" 
-                                    />
-                    <DataGridTemplateColumn Header="Title">
-                        <DataGridTemplateColumn.CellTemplate>
-                            <DataTemplate>
-                                <TextBlock Text="{Binding Isbn13Navigation.Title}" />
-                            </DataTemplate>
-                        </DataGridTemplateColumn.CellTemplate>
-
-                        <DataGridTemplateColumn.CellEditingTemplate>
-                            <DataTemplate>
-                                <ComboBox ItemsSource="{Binding DataContext.Books, RelativeSource={RelativeSource AncestorType=DataGrid}}"
-                                          SelectedItem="{Binding Isbn13Navigation, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
-                                          DisplayMemberPath="Title"
-                                          IsEditable="False"/>
-                            </DataTemplate>
-                        </DataGridTemplateColumn.CellEditingTemplate>
-                    </DataGridTemplateColumn>
-                <DataGridTextColumn Header="Author last name"
+                                    Binding="{Binding Isbn13}" />
+                <DataGridTextColumn Header="Title"
+                                    Binding="{Binding Isbn13Navigation.Title}" />
+                    <DataGridTextColumn Header="Author last name"
                                     Binding="{Binding Isbn13Navigation.Author.LastName}" />
                 <DataGridTextColumn Header="Author first name"
                                     Binding="{Binding Isbn13Navigation.Author.FirstName}" />
@@ -90,7 +76,21 @@
             </DataGrid.Columns>    
             
         </DataGrid>
+            
         </Border>
+        <StackPanel Grid.Row="2"
+                    Grid.ColumnSpan="2"
+                    Orientation="Horizontal"
+                    Margin="10"
+                    >
+            <ComboBox ItemsSource="{Binding Books}"
+              SelectedItem="{Binding AddedBook}"
+              DisplayMemberPath="Title"
+              IsEditable="True"
+              IsReadOnly="True"
+              Text="Available books" />
+
+        </StackPanel>
     </Grid>
 </Window>
 
