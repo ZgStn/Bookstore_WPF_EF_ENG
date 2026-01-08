@@ -86,6 +86,7 @@
                     Margin="10"
                     >
             <ComboBox 
+              Width="200"
               ItemsSource="{Binding AvailableBooks}"
               SelectedItem="{Binding AddedBook}"
               DisplayMemberPath="Title"

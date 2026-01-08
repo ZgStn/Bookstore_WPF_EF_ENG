@@ -1,4 +1,5 @@
 ﻿using System.Collections.ObjectModel;
+using System.Threading.Tasks;
 using Bookstore.Domain;
 using Bookstore.Infrastructure.Data.Model;
 using Bookstore_WPF_EF_ENG.Command;
@@ -14,7 +15,7 @@ namespace Bookstore_WPF_EF_ENG.ViewModel
         {
             _db = new BookstoreContext();
             ShowBookDetailsCommand = new DelegateCommand(DoShowBookDetails, CanShowBookDetails);
-            AddBookCommand = new DelegateCommand(AddBook, CanAddBook);
+            AddBookCommand = new DelegateCommand(ExecuteAddBook, CanAddBook);
             SaveChangesCommand = new DelegateCommand(
                 async _ => await SaveChangesAsync(),
                 _ => _db.ChangeTracker.HasChanges());
@@ -133,16 +134,27 @@ namespace Bookstore_WPF_EF_ENG.ViewModel
                    && AddedBook != null;
         }
 
-        private void AddBook(object? obj)
+        private async void ExecuteAddBook(object? obj)
         {
+            await AddBookAsync();
+        }
+
+        private async Task AddBookAsync()
+        {
+            var store = await _db.Stores
+                .FirstAsync(s => s.Name == SelectedStore);
+
             var newInventory = new Inventory()
             {
                 Isbn13 = AddedBook!.Isbn13,
-                Isbn13Navigation = AddedBook
+                Isbn13Navigation = AddedBook,
+                Store = store
                 //Quantity = NewQuantity
             };
 
+            _db.Inventories.Add(newInventory);
             Inventories.Add(newInventory);
+            AddedBook = null;
             RaisePropertyChanged(nameof(AddedBook));
             SaveChangesCommand.RaiseCanExecuteChanged();
 
@@ -150,10 +162,7 @@ namespace Bookstore_WPF_EF_ENG.ViewModel
             //NewQuantity = 0;
             //AvailableBooksPlaceholder = "Available book";
             //RaisePropertyChanged(nameof(NewQuantity));
-
         }
-
-
 
 
 
