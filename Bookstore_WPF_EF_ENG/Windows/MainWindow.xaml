@@ -63,8 +63,8 @@
 
                         <DataGridTemplateColumn.CellEditingTemplate>
                             <DataTemplate>
-                                <ComboBox 
-                                          SelectedItem="{Binding }"
+                                <ComboBox ItemsSource="{Binding DataContext.Books, RelativeSource={RelativeSource AncestorType=DataGrid}}"
+                                          SelectedItem="{Binding Isbn13Navigation, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
                                           DisplayMemberPath="Title"
                                           IsEditable="False"/>
                             </DataTemplate>

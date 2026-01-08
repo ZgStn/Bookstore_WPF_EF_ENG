@@ -15,7 +15,7 @@ public partial class MainWindow : Window
         DataContext = viewModel = new MainWindowViewModel()
         {
             ShowBookDetails = OpenBookDetailsWindow,
-            ShowMessage = message => MessageBox.Show(message)
+            //ShowMessage = message => MessageBox.Show(message)
         };
     }
 

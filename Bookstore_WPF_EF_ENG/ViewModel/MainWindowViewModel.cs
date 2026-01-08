@@ -20,7 +20,7 @@ namespace Bookstore_WPF_EF_ENG.ViewModel
             {
                 _selectedStore = value;
 
-                LoadInventoriesAsync();
+                _ = LoadInventoriesAsync();
 
                 //RaisePropertyChanged(); // TODO: varför har vi denna, (två st)
                 RaisePropertyChanged("Inventories");
@@ -29,7 +29,7 @@ namespace Bookstore_WPF_EF_ENG.ViewModel
         }
 
 
-        public ObservableCollection<Book> Books { get; private set; }
+        public ObservableCollection<Book> Books { get; set; }
 
         private string? _selectedBook;
 
@@ -74,9 +74,16 @@ namespace Bookstore_WPF_EF_ENG.ViewModel
         public MainWindowViewModel() //TODO:denna syncront, temporär- bytt till async senare
         {
             ShowBookDetailsCommand = new DelegateCommand(DoShowBookDetails, CanShowBookDetails);
-            LoadStoresAsync();
+            _ = InitializeAsync();
         }
+        
+        private async Task InitializeAsync()
+        {
+            await LoadStoresAsync();
+            await LoadBooksAsync();
+            //await LoadInventoriesAsync();
 
+        }
         private void DoShowBookDetails(object obj) => ShowBookDetails();
 
         //private void DoShowBookDetails(object obj) => ShowMessage?.Invoke("Button clicked!");//ShowBookDetails(obj);
@@ -108,6 +115,20 @@ namespace Bookstore_WPF_EF_ENG.ViewModel
 
             );
 
+            RaisePropertyChanged(nameof(Inventories));
+
+        }
+
+        private async Task LoadBooksAsync()
+        {
+            using var db = new BookstoreContext();
+
+            Books = new ObservableCollection<Book>(
+                await db.Books
+                    .Include(b => b.Author)
+                    .ToListAsync()
+                    );
+            RaisePropertyChanged(nameof(Books));
         }
     }
 }
