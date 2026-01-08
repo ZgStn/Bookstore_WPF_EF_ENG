@@ -8,6 +8,28 @@ namespace Bookstore_WPF_EF_ENG.ViewModel
 {
     internal class MainWindowViewModel : ViewModelBase
     {
+        private readonly BookstoreContext _db;
+
+        public MainWindowViewModel() //TODO:denna syncront, temporär- bytt till async senare
+        {
+            _db = new BookstoreContext();
+            ShowBookDetailsCommand = new DelegateCommand(DoShowBookDetails, CanShowBookDetails);
+            AddBookCommand = new DelegateCommand(AddBook, CanAddBook);
+            SaveChangesCommand = new DelegateCommand(
+                async _ => await SaveChangesAsync(),
+                _ => _db.ChangeTracker.HasChanges());
+
+            _ = InitializeAsync();
+        }
+
+        private async Task SaveChangesAsync()
+        {
+            await _db.SaveChangesAsync();
+            RaisePropertyChanged(nameof(AvailableBooks));
+            SaveChangesCommand.RaiseCanExecuteChanged();
+        }
+
+        public DelegateCommand SaveChangesCommand { get; }
         public ObservableCollection<string> Stores { get; private set; } = new();
 
         private string? _selectedStore;
@@ -39,7 +61,7 @@ namespace Bookstore_WPF_EF_ENG.ViewModel
             }
         }
 
-        public int NewQuantity { get; set; }
+        //public int NewQuantity { get; set; }
 
         public DelegateCommand AddBookCommand { get; } 
         
@@ -79,6 +101,7 @@ namespace Bookstore_WPF_EF_ENG.ViewModel
                 _selectedInventory = value;
                 RaisePropertyChanged();
                 ShowBookDetailsCommand.RaiseCanExecuteChanged();
+                SaveChangesCommand.RaiseCanExecuteChanged();
 
             }
         }
@@ -102,12 +125,7 @@ namespace Bookstore_WPF_EF_ENG.ViewModel
                 return new ObservableCollection<Book>(availableToAdd);
             } }
 
-        public MainWindowViewModel() //TODO:denna syncront, temporär- bytt till async senare
-        {
-            ShowBookDetailsCommand = new DelegateCommand(DoShowBookDetails, CanShowBookDetails);
-            AddBookCommand = new DelegateCommand(AddBook, CanAddBook);
-            _ = InitializeAsync();
-        }
+        
 
         private bool CanAddBook(object? arg)
         {
@@ -125,11 +143,12 @@ namespace Bookstore_WPF_EF_ENG.ViewModel
             };
 
             Inventories.Add(newInventory);
+            RaisePropertyChanged(nameof(AddedBook));
+            SaveChangesCommand.RaiseCanExecuteChanged();
 
 
             //NewQuantity = 0;
             //AvailableBooksPlaceholder = "Available book";
-            RaisePropertyChanged(nameof(AddedBook));
             //RaisePropertyChanged(nameof(NewQuantity));
 
         }
@@ -166,45 +185,46 @@ namespace Bookstore_WPF_EF_ENG.ViewModel
 
         private bool CanShowBookDetails(object? arg) => SelectedInventory is not null;
 
-        private async Task LoadStoresAsync() // TODO: make async 
+        private async Task LoadStoresAsync()
         {
-            using var db = new BookstoreContext();
-
             Stores = new ObservableCollection<string>(
-               await db.Stores.Select(s => s.Name).ToListAsync() //TODO: Behövs det .Distinct() här?
+               await _db.Stores
+               .Select(s => s.Name)
+               .ToListAsync()
 
             );
             RaisePropertyChanged(nameof(Stores));
+            SaveChangesCommand.RaiseCanExecuteChanged();
         }
 
-        private async Task LoadInventoriesAsync() // TODO: make async
+        private async Task LoadInventoriesAsync()
         {
-            using var db = new BookstoreContext();
-
             Inventories = new ObservableCollection<Inventory>(
-                 await db.Inventories
+                 await _db.Inventories
                  .Include(i => i.Isbn13Navigation)
                  .ThenInclude(b => b.Author)
-                 .Where(i => i.Store.Name == SelectedStore).ToListAsync()
+                 .Where(i => i.Store.Name == SelectedStore)
+                 .ToListAsync()
 
             );
 
             RaisePropertyChanged(nameof(Inventories));
             RaisePropertyChanged(nameof(AvailableBooks));
+            SaveChangesCommand.RaiseCanExecuteChanged();
 
         }
 
         private async Task LoadBooksAsync()
         {
-            using var db = new BookstoreContext();
-
             Books = new ObservableCollection<Book>(
-                await db.Books
+                await _db.Books
                     .Include(b => b.Author)
                     .ToListAsync()
                     );
+
             RaisePropertyChanged(nameof(Books));
             RaisePropertyChanged(nameof(AvailableBooks));
+            SaveChangesCommand.RaiseCanExecuteChanged();
         }
     }
 }

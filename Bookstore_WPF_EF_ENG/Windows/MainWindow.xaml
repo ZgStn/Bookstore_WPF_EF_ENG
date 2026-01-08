@@ -35,13 +35,15 @@
             <Button Content="Show Quantity" 
                     VerticalAlignment="Center"
                     Command="{Binding ShowBookDetailsCommand}"/>
+            <Button Content="Save"
+                    Command="{Binding SaveChangesCommand}"/>
         </StackPanel>
         <Border Padding="10"
                 Margin="10"
                 Grid.Row="1">
             <DataGrid 
                   AutoGenerateColumns="False"
-                  IsReadOnly="True"
+                  IsReadOnly="False"
                   CanUserAddRows="False"
                   CanUserDeleteRows="False"
                   CanUserResizeRows="False"
@@ -70,7 +72,7 @@
                                     Binding="{Binding Isbn13Navigation.Price}"
                                     ElementStyle="{StaticResource RightJusifiedTextCell}"/>
                 <DataGridTextColumn Header="Quantity"
-                                    Binding="{Binding Quantity}"
+                                    Binding="{Binding Quantity, UpdateSourceTrigger=PropertyChanged}"
                                     ElementStyle="{StaticResource RightJusifiedTextCell}"/>
       
             </DataGrid.Columns>    
