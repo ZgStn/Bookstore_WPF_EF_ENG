@@ -53,6 +53,9 @@
                   CanUserSortColumns="True"
                   CanUserReorderColumns="False"
                   SelectionMode="Single"
+                  VerticalScrollBarVisibility="Visible"
+                  RowBackground="White"
+                  AlternatingRowBackground="LightCyan"
                   ItemsSource="{Binding Inventories}"
                   SelectedItem="{Binding SelectedInventory}">
             <DataGrid.Columns>
