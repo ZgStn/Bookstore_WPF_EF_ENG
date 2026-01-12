@@ -36,6 +36,8 @@
                     VerticalAlignment="Center"
                     Command="{Binding ShowBookDetailsCommand}"/>
             <Button Content="Save"
+                    VerticalAlignment="Center"
+                    Margin="10,0,0,0"
                     Command="{Binding SaveChangesCommand}"/>
         </StackPanel>
         <Border Padding="10"
@@ -51,6 +53,9 @@
                   CanUserSortColumns="True"
                   CanUserReorderColumns="False"
                   SelectionMode="Single"
+                  VerticalScrollBarVisibility="Visible"
+                  RowBackground="White"
+                  AlternatingRowBackground="LightCyan"
                   ItemsSource="{Binding Inventories}"
                   SelectedItem="{Binding SelectedInventory}">
             <DataGrid.Columns>
