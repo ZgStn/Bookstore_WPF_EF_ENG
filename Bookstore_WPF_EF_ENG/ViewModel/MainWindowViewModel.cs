@@ -8,30 +8,9 @@ namespace Bookstore_WPF_EF_ENG.ViewModel
     internal class MainWindowViewModel : ViewModelBase
     {
         private readonly BookstoreService _bookstoreService = new();
-
-        public MainWindowViewModel()
-        {
-            ShowBookDetailsCommand = new DelegateCommand(DoShowBookDetails, CanShowBookDetails);
-            AddBookCommand = new DelegateCommand(ExecuteAddBook, CanAddBook);
-            SaveChangesCommand = new DelegateCommand(
-                async _ => await SaveChangesAsync(),
-                _ => _bookstoreService.HasChanges());
-
-            _ = InitializeAsync();
-        }
-
-        private async Task SaveChangesAsync()
-        {
-            await _bookstoreService.SaveChangesAsync();
-            RaisePropertyChanged(nameof(AvailableBooks));
-            SaveChangesCommand.RaiseCanExecuteChanged();
-        }
-
         public DelegateCommand SaveChangesCommand { get; }
         public ObservableCollection<string> Stores { get; private set; } = new();
-
         private string? _selectedStore;
-
         public string? SelectedStore
         {
             get => _selectedStore;
@@ -45,9 +24,7 @@ namespace Bookstore_WPF_EF_ENG.ViewModel
                 AddBookCommand.RaiseCanExecuteChanged();
             }
         }
-
         private Book? _addedBook;
-
         public Book? AddedBook
         {
             get => _addedBook;
@@ -58,17 +35,11 @@ namespace Bookstore_WPF_EF_ENG.ViewModel
                 AddBookCommand.RaiseCanExecuteChanged();
             }
         }
-
         //public int NewQuantity { get; set; }
-
         public DelegateCommand AddBookCommand { get; }
-
         //public DelegateCommand AddNewBookCommand { get; } // TODO: for extra credit
-
         public ObservableCollection<Book> Books { get; set; }
-
         private string? _selectedBook;
-
         public string? SelectedBook
         {
             get => _selectedBook;
@@ -85,11 +56,8 @@ namespace Bookstore_WPF_EF_ENG.ViewModel
 
             }
         }
-
         public ObservableCollection<Inventory> Inventories { get; private set; }
-
         private Inventory? _selectedInventory;
-
         public Inventory? SelectedInventory
         {
             get => _selectedInventory;
@@ -100,17 +68,13 @@ namespace Bookstore_WPF_EF_ENG.ViewModel
                 RaisePropertyChanged();
                 ShowBookDetailsCommand.RaiseCanExecuteChanged();
                 SaveChangesCommand.RaiseCanExecuteChanged();
+                RemoveBookCommand.RaiseCanExecuteChanged();
 
             }
         }
-
         public Action ShowBookDetails { get; set; }
-
-
         public DelegateCommand ShowBookDetailsCommand { get; private set; }
-
         //public Action<string> ShowMessage { get; set; }
-
         public ObservableCollection<Book> AvailableBooks
         {
             get
@@ -126,7 +90,45 @@ namespace Bookstore_WPF_EF_ENG.ViewModel
             }
         }
 
+        public DelegateCommand RemoveBookCommand { get; set; }
+        public MainWindowViewModel()
+        {
+            ShowBookDetailsCommand = new DelegateCommand(ExecuteShowBookDetails, CanShowBookDetails);
+            AddBookCommand = new DelegateCommand(ExecuteAddBook, CanAddBook);
+            RemoveBookCommand = new DelegateCommand(ExecuteRemoveBook, CanRemoveBook);
+            SaveChangesCommand = new DelegateCommand(
+                async _ => await SaveChangesAsync(),
+                _ => _bookstoreService.HasChanges());
 
+            _ = InitializeAsync();
+        }
+
+        private bool CanRemoveBook(object? arg)
+        {
+            return SelectedStore != null
+                   && SelectedInventory != null;
+        }
+
+        private async void ExecuteRemoveBook(object? obj)
+        {
+            await RemoveBookAsync();
+        }
+
+        private async Task RemoveBookAsync()
+        {
+
+            _bookstoreService.RemoveInventory(SelectedInventory);
+            Inventories.Remove(SelectedInventory);
+            RaisePropertyChanged(nameof(AvailableBooks));
+            SaveChangesCommand.RaiseCanExecuteChanged();
+        }
+
+        private async Task SaveChangesAsync()
+        {
+            await _bookstoreService.SaveChangesAsync();
+            RaisePropertyChanged(nameof(AvailableBooks));
+            SaveChangesCommand.RaiseCanExecuteChanged();
+        }
 
         private bool CanAddBook(object? arg)
         {
@@ -144,7 +146,6 @@ namespace Bookstore_WPF_EF_ENG.ViewModel
             // TODO: protect against SelectedStore = null (make AddButton non-clickable
             // and/or here add if (SelectedStore = null) return
             var store = await _bookstoreService.GetStoreByNameAsync(SelectedStore);
-
 
             var newInventory = new Inventory()
             {
@@ -189,7 +190,7 @@ namespace Bookstore_WPF_EF_ENG.ViewModel
             //await LoadInventoriesAsync();
 
         }
-        private void DoShowBookDetails(object obj) => ShowBookDetails();
+        private void ExecuteShowBookDetails(object obj) => ShowBookDetails();
 
         //private void DoShowBookDetails(object obj) => ShowMessage?.Invoke("Button clicked!");//ShowBookDetails(obj);
 

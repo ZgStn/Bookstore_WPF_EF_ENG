@@ -24,6 +24,7 @@
         </Grid.RowDefinitions>
         <StackPanel Grid.Row="0"
                     Orientation="Horizontal">
+            
             <ComboBox Text="Bookstores"
                       IsEditable="True"
                       IsReadOnly="True"
@@ -32,13 +33,21 @@
                       VerticalAlignment="Center" 
                       ItemsSource="{Binding Stores }"
                       SelectedItem="{Binding SelectedStore}" />
+            
             <Button Content="Show Quantity" 
                     VerticalAlignment="Center"
+                    Margin="30"
                     Command="{Binding ShowBookDetailsCommand}"/>
+            
             <Button Content="Save"
                     VerticalAlignment="Center"
-                    Margin="10,0,0,0"
+                    Margin="30"
                     Command="{Binding SaveChangesCommand}"/>
+
+            <Button Content="Remove"
+                    VerticalAlignment="Center"
+                    Margin="30"
+                    Command="{Binding RemoveBookCommand}"/>
         </StackPanel>
         <Border Padding="10"
                 Margin="10"

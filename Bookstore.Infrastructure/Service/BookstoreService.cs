@@ -9,6 +9,7 @@ public class BookstoreService
     private readonly BookstoreContext _db = new();
 
     public void AddInventory(Inventory inventory) => _db.Inventories.Add(inventory);
+    public void RemoveInventory(Inventory inventory) => _db.Inventories.Remove(inventory);
 
     public async Task<Store> GetStoreByNameAsync(string selectedStore)
     {
