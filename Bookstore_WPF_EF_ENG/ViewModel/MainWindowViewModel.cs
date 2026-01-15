@@ -1,9 +1,9 @@
 ﻿using Bookstore.Domain;
 using Bookstore.Infrastructure.Service;
-using Bookstore_WPF_EF_ENG.Command;
+using Bookstore.Presentation.Command;
 using System.Collections.ObjectModel;
 
-namespace Bookstore_WPF_EF_ENG.ViewModel
+namespace Bookstore.Presentation.ViewModel
 {
     internal class MainWindowViewModel : ViewModelBase
     {

@@ -1,6 +1,6 @@
 ﻿using System.Windows.Input;
 
-namespace Bookstore_WPF_EF_ENG.Command
+namespace Bookstore.Presentation.Command
 {
     internal class DelegateCommand : ICommand
     {

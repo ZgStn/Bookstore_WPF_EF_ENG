@@ -3,7 +3,7 @@ using Bookstore.Domain;
 using Bookstore.Infrastructure.Data.Model;
 using Microsoft.EntityFrameworkCore;
 
-namespace Bookstore_WPF_EF_ENG.ViewModel
+namespace Bookstore.Presentation.ViewModel
 {
     internal class BookDetailsViewModel : ViewModelBase
     {

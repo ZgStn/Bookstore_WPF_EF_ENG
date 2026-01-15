@@ -1,7 +1,7 @@
 ﻿using System.ComponentModel;
 using System.Runtime.CompilerServices;
 
-namespace Bookstore_WPF_EF_ENG.ViewModel
+namespace Bookstore.Presentation.ViewModel
 {
     internal class ViewModelBase : INotifyPropertyChanged // alla som ärver , från  Interfaced, att få det färdig implementerad. 
     {

@@ -1,7 +1,7 @@
 ﻿using System.Windows;
-using Bookstore_WPF_EF_ENG.ViewModel;
+using Bookstore.Presentation.ViewModel;
 
-namespace Bookstore_WPF_EF_ENG.Windows;
+namespace Bookstore.Presentation.Windows;
 
 /// <summary>
 /// Interaction logic for MainWindow.xaml

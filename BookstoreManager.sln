@@ -1,9 +1,9 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
-VisualStudioVersion = 17.14.36705.20 d17.14
+VisualStudioVersion = 17.14.36705.20
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Bookstore_WPF_EF_ENG", "Bookstore_WPF_EF_ENG\Bookstore_WPF_EF_ENG.csproj", "{1E59921E-7B67-4375-BBB7-59512B145C34}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Bookstore.Presentation", "Bookstore_WPF_EF_ENG\Bookstore.Presentation.csproj", "{1E59921E-7B67-4375-BBB7-59512B145C34}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Bookstore.Domain", "Bookstore.Domain\Bookstore.Domain.csproj", "{B5FC32F4-A344-479E-95A4-B9FDE3E7E087}"
 EndProject

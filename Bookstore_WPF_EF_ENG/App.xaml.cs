@@ -2,7 +2,7 @@
 using System.Data;
 using System.Windows;
 
-namespace Bookstore_WPF_EF_ENG
+namespace Bookstore.Presentation
 {
     /// <summary>
     /// Interaction logic for App.xaml
