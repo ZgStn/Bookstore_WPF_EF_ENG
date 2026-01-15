@@ -5,10 +5,10 @@ using Microsoft.EntityFrameworkCore;
 
 namespace Bookstore.Presentation.ViewModel
 {
-    internal class BookDetailsViewModel : ViewModelBase
+    internal class BookDetailsViewModel : ViewModelBase // TODO: use or discard?
     {
-        public ObservableCollection<Inventory> Details { get; set; } //TODO: vi har samma observablecollection i mainwindowviewmodel, blir det ett problem?
-        public BookDetailsViewModel(Inventory inventory) // TODO: make awaited (not in constructor)
+        public ObservableCollection<Inventory> Details { get; set; }
+        public BookDetailsViewModel(Inventory inventory)
         {
             _ = LoadQuantityAsync(inventory.Quantity);
         }

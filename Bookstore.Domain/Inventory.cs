@@ -19,5 +19,4 @@ public partial class Inventory
 public partial class Inventory
 {   
     // TODO: IsValidPrice >= 1 ?
-    //public bool IsValidQuantity => Quantity > 0;
 }

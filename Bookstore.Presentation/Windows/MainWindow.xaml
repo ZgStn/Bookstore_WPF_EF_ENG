@@ -50,10 +50,10 @@
                     Margin="10"
                     Command="{Binding AddBookCommand}"/>
 
-            <Button Content="Show Quantity" 
+            <!--<Button Content="Show Quantity" 
                     VerticalAlignment="Center"
                     Margin="10"
-                    Command="{Binding ShowBookDetailsCommand}"/>
+                    Command="{Binding ShowBookDetailsCommand}"/>-->
 
             <Button Content="Remove from bookstore"
                     VerticalAlignment="Center"
@@ -84,6 +84,7 @@
                   AlternatingRowBackground="LightCyan"
                   ItemsSource="{Binding Inventories}"
                   SelectedItem="{Binding SelectedInventory}">
+
             <DataGrid.Columns>
                 <DataGridTextColumn Header="ISBN"
                                     Binding="{Binding Isbn13}" />
@@ -111,13 +112,13 @@
         </DataGrid>
             
         </Border>
-        <StackPanel Grid.Row="2"
+        <!--<StackPanel Grid.Row="2"
                     Grid.ColumnSpan="2"
                     Orientation="Horizontal"
                     Margin="10"
                     >
             
-        </StackPanel>
+        </StackPanel>-->
     </Grid>
 </Window>
 

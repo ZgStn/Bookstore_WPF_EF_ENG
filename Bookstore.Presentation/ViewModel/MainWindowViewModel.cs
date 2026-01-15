@@ -24,6 +24,7 @@ namespace Bookstore.Presentation.ViewModel
                 AddBookCommand.RaiseCanExecuteChanged();
             }
         }
+
         private Book? _addedBook;
         public Book? AddedBook
         {
@@ -35,9 +36,8 @@ namespace Bookstore.Presentation.ViewModel
                 AddBookCommand.RaiseCanExecuteChanged();
             }
         }
-        //public int NewQuantity { get; set; }
+
         public DelegateCommand AddBookCommand { get; }
-        //public DelegateCommand AddNewBookCommand { get; } // TODO: for extra credit
         public ObservableCollection<Book> Books { get; set; }
         private string? _selectedBook;
         public string? SelectedBook
@@ -48,14 +48,12 @@ namespace Bookstore.Presentation.ViewModel
             {
                 _selectedBook = value;
 
-                //LoadInventories();
-
                 RaisePropertyChanged();
                 ShowBookDetailsCommand.RaiseCanExecuteChanged();
                 RaisePropertyChanged("Books");
-
             }
         }
+
         public ObservableCollection<Inventory> Inventories { get; private set; }
         private Inventory? _selectedInventory;
         public Inventory? SelectedInventory
@@ -69,12 +67,11 @@ namespace Bookstore.Presentation.ViewModel
                 ShowBookDetailsCommand.RaiseCanExecuteChanged();
                 SaveChangesCommand.RaiseCanExecuteChanged();
                 RemoveBookCommand.RaiseCanExecuteChanged();
-
             }
         }
+
         public Action ShowBookDetails { get; set; }
         public DelegateCommand ShowBookDetailsCommand { get; private set; }
-        //public Action<string> ShowMessage { get; set; }
         public ObservableCollection<Book> AvailableBooks
         {
             get
@@ -93,7 +90,8 @@ namespace Bookstore.Presentation.ViewModel
         public DelegateCommand RemoveBookCommand { get; set; }
         public MainWindowViewModel()
         {
-            ShowBookDetailsCommand = new DelegateCommand(ExecuteShowBookDetails, CanShowBookDetails);
+            // TODO: use or discard?
+            //ShowBookDetailsCommand = new DelegateCommand(ExecuteShowBookDetails, CanShowBookDetails);
             AddBookCommand = new DelegateCommand(ExecuteAddBook, CanAddBook);
             RemoveBookCommand = new DelegateCommand(ExecuteRemoveBook, CanRemoveBook);
             SaveChangesCommand = new DelegateCommand(
@@ -153,8 +151,11 @@ namespace Bookstore.Presentation.ViewModel
 
         private async Task AddBookAsync()
         {
-            // TODO: protect against SelectedStore = null (make AddButton non-clickable
-            // and/or here add if (SelectedStore = null) return
+            if (SelectedStore == null)
+            {
+                return;
+            }
+
             var store = await _bookstoreService.GetStoreByNameAsync(SelectedStore);
 
             var newInventory = new Inventory()
@@ -162,7 +163,6 @@ namespace Bookstore.Presentation.ViewModel
                 Isbn13 = AddedBook!.Isbn13,
                 Isbn13Navigation = AddedBook,
                 Store = store
-                //Quantity = NewQuantity
             };
 
             _bookstoreService.AddInventory(newInventory);
@@ -171,14 +171,11 @@ namespace Bookstore.Presentation.ViewModel
             RaisePropertyChanged(nameof(AddedBook));
             SaveChangesCommand.RaiseCanExecuteChanged();
 
-
-            //NewQuantity = 0;
-            //AvailableBooksPlaceholder = "Available book";
-            //RaisePropertyChanged(nameof(NewQuantity));
+            // TODO: use or discard? AvailableBooksPlaceholder = "Available book";
         }
 
 
-
+        // TODO: use or discard?
         //private string _availableBooksPlaceholder;     
 
         //public string AvailableBooksPlaceholder
@@ -197,15 +194,12 @@ namespace Bookstore.Presentation.ViewModel
         {
             await LoadStoresAsync();
             await LoadBooksAsync();
-            //await LoadInventoriesAsync();
-
         }
-        private void ExecuteShowBookDetails(object obj) => ShowBookDetails();
 
-        //private void DoShowBookDetails(object obj) => ShowMessage?.Invoke("Button clicked!");//ShowBookDetails(obj);
+        // TODO: use or discard?
+        //private void ExecuteShowBookDetails(object obj) => ShowBookDetails();
 
-
-        private bool CanShowBookDetails(object? arg) => SelectedInventory is not null;
+        //private bool CanShowBookDetails(object? arg) => SelectedInventory is not null;
 
         private async Task LoadStoresAsync()
         {

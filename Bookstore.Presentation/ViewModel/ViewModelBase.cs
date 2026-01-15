@@ -3,7 +3,7 @@ using System.Runtime.CompilerServices;
 
 namespace Bookstore.Presentation.ViewModel
 {
-    internal class ViewModelBase : INotifyPropertyChanged // alla som ärver , från  Interfaced, att få det färdig implementerad. 
+    internal class ViewModelBase : INotifyPropertyChanged
     {
         public event PropertyChangedEventHandler? PropertyChanged;
 
