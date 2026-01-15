@@ -7,7 +7,7 @@
         xmlns:UI="clr-namespace:Bookstore_WPF_EF_ENG.ViewModel"
         mc:Ignorable="d"
         d:DataContext="{d:DesignInstance Type= UI:MainWindowViewModel, IsDesignTimeCreatable=True}"
-        Title="BookstoreManager" Height="450" Width="900">
+        Title="BookstoreManager" Height="450" Width="1000">
     
     <Window.Resources>
         <Style TargetType="{x:Type TextBlock}" x:Key="RightJusifiedTextCell">
@@ -33,22 +33,39 @@
                       VerticalAlignment="Center" 
                       ItemsSource="{Binding Stores }"
                       SelectedItem="{Binding SelectedStore}" />
-            
+
+            <ComboBox 
+                      Text="Central catalog" 
+                      IsEditable="True"
+                      IsReadOnly="True"
+                      Width="200"
+                      Margin="10"
+                      VerticalAlignment="Center"
+                      ItemsSource="{Binding AvailableBooks}"
+                      SelectedItem="{Binding AddedBook}"
+                      DisplayMemberPath="Title" />
+
+            <Button Content="Add to bookstore"
+                    VerticalAlignment="Center"
+                    Margin="10"
+                    Command="{Binding AddBookCommand}"/>
+
             <Button Content="Show Quantity" 
                     VerticalAlignment="Center"
-                    Margin="30"
+                    Margin="10"
                     Command="{Binding ShowBookDetailsCommand}"/>
-            
-            <Button Content="Save"
-                    VerticalAlignment="Center"
-                    Margin="30"
-                    Command="{Binding SaveChangesCommand}"/>
 
-            <Button Content="Remove"
+            <Button Content="Remove from bookstore"
                     VerticalAlignment="Center"
-                    Margin="30"
+                    Margin="10"
                     Command="{Binding RemoveBookCommand}"/>
+            
+            <Button Content="Save changes"
+                    VerticalAlignment="Center"
+                    Margin="10"
+                    Command="{Binding SaveChangesCommand}"/>
         </StackPanel>
+            
         <Border Padding="10"
                 Margin="10"
                 Grid.Row="1">
@@ -72,9 +89,11 @@
                                     Binding="{Binding Isbn13}" />
                     <DataGridTextColumn Header="Title"
                                     Binding="{Binding Isbn13Navigation.Title}" />
-                    <DataGridTextColumn Header="Author name"
-                                    Binding="{Binding Isbn13Navigation.Author.FullName}" />
-                <DataGridTextColumn Header="Publishing date"
+                    <DataGridTextColumn Header="Author last name"
+                                    Binding="{Binding Isbn13Navigation.Author.LastName}" />
+                    <DataGridTextColumn Header="Author first name"
+                                    Binding="{Binding Isbn13Navigation.Author.FirstName}" />
+                    <DataGridTextColumn Header="Publishing date"
                                     Binding="{Binding Isbn13Navigation.PublishingDate}"
                                     ElementStyle="{StaticResource RightJusifiedTextCell}"/>
                 <DataGridTextColumn Header="Number of pages"
@@ -97,18 +116,7 @@
                     Orientation="Horizontal"
                     Margin="10"
                     >
-            <ComboBox 
-              Width="200"
-              ItemsSource="{Binding AvailableBooks}"
-              SelectedItem="{Binding AddedBook}"
-              DisplayMemberPath="Title"
-              IsEditable="True"
-              IsReadOnly="True"
-              Text="Available books" />
-
-            <Button Content="Add"
-                    Margin="10, 0, 0, 0"
-                    Command="{Binding AddBookCommand}"/>
+            
         </StackPanel>
     </Grid>
 </Window>

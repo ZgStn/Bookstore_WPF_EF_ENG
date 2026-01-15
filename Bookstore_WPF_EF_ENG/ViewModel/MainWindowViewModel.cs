@@ -125,6 +125,16 @@ namespace Bookstore_WPF_EF_ENG.ViewModel
 
         private async Task SaveChangesAsync()
         {
+            var toBeRemoved = Inventories
+                              .Where(i => i.Quantity <= 0)
+                              .ToList();
+
+            foreach (var inventory in toBeRemoved)
+            {
+                _bookstoreService.RemoveInventory(inventory);
+                Inventories.Remove(inventory);
+            }
+
             await _bookstoreService.SaveChangesAsync();
             RaisePropertyChanged(nameof(AvailableBooks));
             SaveChangesCommand.RaiseCanExecuteChanged();
