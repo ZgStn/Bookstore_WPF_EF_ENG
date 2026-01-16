@@ -41,3 +41,32 @@ The application allows the user to:
 - Update book quantities and save changes to the database
 
 All data access is handled using Entity Framework Core and a SQL Server database.
+
+### Main Window – Bookstore Inventory
+When the application starts, the main window is displayed with the user interface for managing bookstore inventories. After selecting a store, its inventory is loaded and displayed in the table.
+
+![Main Window](images/MainWindow.png)
+
+---
+
+
+### Central Catalog
+The central catalog displays all available books that can be added to a store.
+
+![Central Catalog](images/CentralCatalog.png)
+
+---
+
+### Add Book from Central Catalog
+A book can be selected from the central catalog and added to the selected store.
+
+![Add Book from Central Catalog](images/AddBookFromCentralCatalog.png)
+
+---
+
+### Update Quantity and Save Changes
+When the quantity of a book is updated, the **Save changes** button becomes enabled and persists the changes to the database.
+
+![Update Quantity and Save Changes](images/AddbookUpdateQuantityAndSaveChanges.png)
+
+
