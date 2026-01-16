@@ -7,13 +7,7 @@ namespace Bookstore.Presentation.ViewModel
 {
     internal class MainWindowViewModel : ViewModelBase
     {
-
-
-        public DelegateCommand NewBookCommand { get; set; }
-
-
-
-
+        public DelegateCommand AddNewBookCommand { get; set; }
         private readonly BookstoreService _bookstoreService = new();
         public DelegateCommand SaveChangesCommand { get; }
         public ObservableCollection<string> Stores { get; private set; } = new();
@@ -101,7 +95,7 @@ namespace Bookstore.Presentation.ViewModel
             ShowBookDetailsCommand = new DelegateCommand(ExecuteShowBookDetails, CanShowBookDetails);
             AddBookCommand = new DelegateCommand(ExecuteAddBook, CanAddBook);
             RemoveBookCommand = new DelegateCommand(ExecuteRemoveBook, CanRemoveBook);
-            NewBookCommand = new DelegateCommand(ExecuteNewBook, CanNewBook);
+            AddNewBookCommand = new DelegateCommand(ExecuteAddNewBook, CanAddNewBook);
             SaveChangesCommand = new DelegateCommand(
                 async _ => await SaveChangesAsync(),
                 _ => _bookstoreService.HasChanges());
@@ -109,18 +103,17 @@ namespace Bookstore.Presentation.ViewModel
             _ = InitializeAsync();
         }
 
-        private bool CanNewBook(object? arg)
+        private bool CanAddNewBook(object? arg)
         {
             return SelectedStore != null;
-
         }
 
-        private async void ExecuteNewBook(object? obj)
+        private async void ExecuteAddNewBook(object? obj)
         {
-            await NewBookAsync();
+            await AddNewBookAsync();
         }
 
-        private async Task NewBookAsync()
+        private async Task AddNewBookAsync()
         {
             throw new NotImplementedException();
         }

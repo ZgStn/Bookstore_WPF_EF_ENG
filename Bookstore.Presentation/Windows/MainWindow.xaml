@@ -64,10 +64,11 @@
                     VerticalAlignment="Center"
                     Margin="10"
                     Command="{Binding SaveChangesCommand}"/>
+            
             <Button Content="Add new book"
                     VerticalAlignment="Center"
                     Margin="10"
-                    Command="{Binding NewBookCommand}" />
+                    Command="{Binding AddNewBookCommand}" />
         </StackPanel>
             
         <Border Padding="10"
