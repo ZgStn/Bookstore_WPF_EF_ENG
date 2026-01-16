@@ -65,7 +65,7 @@ A book can be selected from the central catalog and added to the selected store.
 ---
 
 ### Update Quantity and Save Changes
-When the quantity of a book is updated, the **Save changes** button becomes enabled and persists the changes to the database.
+When the quantity of a book is updated, the **Save changes** button becomes enabled and applies the changes to the database.
 
 ![Update Quantity and Save Changes](AddbookUpdateQuantityAndSaveChanges.png)
 
